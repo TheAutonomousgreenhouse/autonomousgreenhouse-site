@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>autonomousgreenhouse.ai — a greenhouse that runs itself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wordmark"><span class="wordmark-serif">autonomousgreenhouse</span><span class="wordmark-pill">.ai</span></div>
+  <div class="nav-links">
+    <a href="#live">Live</a>
+    <a href="#how">How it works</a>
+    <a href="#log">Build log</a>
+    <a href="#future" class="accent">Get involved &rarr;</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">One real greenhouse &middot; three ESP32s &middot; zero excuses</div>
+      <h1>A backyard greenhouse that <em>runs itself.</em></h1>
+      <p class="lead">Roof windows that open with the heat and slam shut before a storm. Watering by relay. A daily AI read on what the plants went through. Built at home, wired by hand, documented honestly — bugs included.</p>
+      <div class="cta-row">
+        <a href="#log" class="btn btn-solid">Read the build story</a>
+        <a href="#future" class="btn btn-outline">I want this &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <div class="img-placeholder" data-caption="Drop a photo of the greenhouse here"></div>
+      </div>
+      <div class="status-badge">
+        <div class="status-badge-k">status</div>
+        <div class="status-badge-v">&#9679; alive &amp; venting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker-track">
+    <!-- populated by js/main.js, duplicated for seamless loop -->
+  </div>
+</div>
+
+<!-- ============ LIVE SCENE ============ -->
+<section id="live" class="live-scene">
+  <div class="live-grid">
+    <div>
+      <div class="eyebrow eyebrow-dark">Live from the dashboard</div>
+      <h2>The greenhouse, as the software sees it.</h2>
+      <p class="body-dark">The real dashboard shows this scene in realtime over MQTT: two roof flaps that actually move, a climate map, and — since this week — a water-zone glow that honestly covers only the north bed, because that's the only bed valve&nbsp;1 reaches.</p>
+      <div class="metrics-row">
+        <div class="metric-tile">
+          <div class="metric-k">inside temp</div>
+          <div class="metric-v" id="metric-temp">–°C</div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-k">humidity</div>
+          <div class="metric-v" id="metric-hum">–%</div>
+        </div>
+        <div class="metric-tile">
+          <div class="metric-k">roof state</div>
+          <div class="metric-v metric-v-accent" id="metric-roof">–</div>
+        </div>
+      </div>
+      <div class="sim-note">&#9650; simulated preview — the real thing runs on MQTT + SSE</div>
+    </div>
+    <div class="scene-panel">
+      <svg viewBox="0 0 520 300" class="scene-svg">
+        <line x1="20" y1="262" x2="500" y2="262" stroke="#2A3E31" stroke-width="2"/>
+        <path d="M70 262 L70 140 L260 60 L450 140 L450 262" fill="rgba(79,163,107,0.06)" stroke="#4FA36B" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="70" y1="140" x2="450" y2="140" stroke="#2A3E31" stroke-width="1.5"/>
+        <line x1="165" y1="100" x2="165" y2="262" stroke="#2A3E31" stroke-width="1"/>
+        <line x1="355" y1="100" x2="355" y2="262" stroke="#2A3E31" stroke-width="1"/>
+        <g id="flap-north" transform="rotate(0 260 60)"><line x1="260" y1="60" x2="165" y2="100" stroke="#7BC494" stroke-width="4" stroke-linecap="round"/></g>
+        <g id="flap-south" transform="rotate(0 260 60)"><line x1="260" y1="60" x2="355" y2="100" stroke="#7BC494" stroke-width="4" stroke-linecap="round"/></g>
+        <text x="150" y="88" fill="#6E8A78" font-family="IBM Plex Mono" font-size="11" text-anchor="end">north flap</text>
+        <text x="370" y="88" fill="#6E8A78" font-family="IBM Plex Mono" font-size="11">south flap</text>
+        <ellipse id="water-glow" cx="150" cy="250" rx="70" ry="10" fill="rgba(96,165,250,0.04)"/>
+        <g id="water-drip" class="drip" opacity="0">
+          <circle cx="130" cy="228" r="3" fill="#60A5FA"/><circle cx="155" cy="222" r="3" fill="#60A5FA"/><circle cx="178" cy="230" r="3" fill="#60A5FA"/>
+        </g>
+        <g stroke="#3E5C49" stroke-width="3" stroke-linecap="round">
+          <path d="M120 250 v-22 M120 236 l-9 -9 M120 236 l9 -9"/>
+          <path d="M150 250 v-28 M150 232 l-10 -10 M150 232 l10 -10"/>
+          <path d="M180 250 v-20 M180 238 l-8 -8 M180 238 l8 -8"/>
+        </g>
+        <g stroke="#3E5C49" stroke-width="3" stroke-linecap="round">
+          <path d="M330 250 v-24 M330 234 l-9 -9 M330 234 l9 -9"/>
+          <path d="M362 250 v-30 M362 230 l-10 -10 M362 230 l10 -10"/>
+          <path d="M392 250 v-18 M392 240 l-8 -8 M392 240 l8 -8"/>
+        </g>
+        <text x="150" y="284" fill="#60A5FA" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">north bed — valve 1 zone</text>
+        <text x="362" y="284" fill="#6E8A78" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">south bed</text>
+        <circle cx="480" cy="40" r="5" fill="#4FA36B" class="mqtt-dot"/>
+        <text x="470" y="44" fill="#6E8A78" font-family="IBM Plex Mono" font-size="11" text-anchor="end">mqtt</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AI ANALYSIS ============ -->
+<section class="ai-analysis">
+  <div class="ai-grid">
+    <div>
+      <div class="eyebrow">Every night at 00:00</div>
+      <h2>An AI agronomist reads the day back to you.</h2>
+      <p class="body-light">Once a day the server sends 24 hours of temperature, humidity and cloud-cover history to Claude, which returns a short plain-language analysis: how the climate behaved, and early warnings for heat stress or mildew risk. It shows up on the dashboard like a note from someone who was watching all day.</p>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-head">
+        <div class="ai-card-tag">daily-analysis &middot; claude</div>
+        <div class="ai-card-pill">mildew watch</div>
+      </div>
+      <p class="ai-quote">&ldquo;A warm afternoon peaking at 27.4&deg;C; the roof vented on time and kept the spike short. Overnight humidity stayed above 85% under cloud cover — watch the lower tomato leaves for early mildew, and consider venting earlier tomorrow morning.&rdquo;</p>
+      <div class="ai-card-foot">generated from 24h of sensor history — no prompts, no dashboards to read</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" class="how-it-works">
+  <div class="section-inner">
+    <div class="eyebrow">The system</div>
+    <h2 class="how-title">Three small computers, one stubborn builder.</h2>
+    <p class="how-lead">Every node is a &euro;5 ESP32 talking MQTT to a small server. Fail-safe by design: lose the network and the windows close, valves shut themselves off, nothing floods.</p>
+    <div class="node-grid">
+      <div class="node-card">
+        <div class="node-card-top"><div class="node-tag">esp32 &times;2 &middot; roof</div><div class="node-num">01</div></div>
+        <div class="node-title">Self-venting roof windows</div>
+        <p class="node-body">Two nodes drive 12V linear actuators through BTS7960 H-bridges — one per roof flap, north and south. A weather guard on Open-Meteo data closes both windows on thunderstorms, gusts over 50&nbsp;km/h or rain, then restores the last wanted position when it clears.</p>
+        <div class="node-safety">failsafe: heartbeat lost 2h &rarr; windows close</div>
+      </div>
+      <div class="node-card">
+        <div class="node-card-top"><div class="node-tag">esp32 &middot; sensors + engine</div><div class="node-num">02</div></div>
+        <div class="node-title">Climate engine + nightly AI</div>
+        <p class="node-body">A sensor node publishes inside temperature and humidity over MQTT. The climate engine vents on hysteresis — open above 25&deg;C, close under 21&deg;C — with the weather guard always taking priority. At midnight, Claude analyses the full day.</p>
+        <div class="node-safety">weather override beats everything</div>
+      </div>
+      <div class="node-card">
+        <div class="node-card-top"><div class="node-tag">esp32 &middot; water</div><div class="node-num">03</div></div>
+        <div class="node-title">Relay-driven watering</div>
+        <p class="node-body">A fail-safe-closed 1&Prime; solenoid valve on a Grove relay, on its own node with its own firmware — deliberately decoupled from the climate logic. Manual for now, from a dashboard button or a shell script; soil-moisture automation is the next chapter.</p>
+        <div class="node-safety">failsafe: 4h auto-timeout per valve</div>
+      </div>
+    </div>
+    <div class="honest-footnote">
+      <div class="honest-footnote-tag">honest footnote</div>
+      <p>The roof limit switches are probably dead or miswired, so the move-timeout is parked at 90 seconds as a workaround. The DS18B20 outdoor sensors never worked despite hours of diagnosis; a DHT11 does the job for now. That's what building real hardware looks like — and it all still runs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BUILD LOG ============ -->
+<section id="log" class="build-log">
+  <div class="eyebrow">Build log</div>
+  <h2 class="build-log-title">Built in phases, in the open.</h2>
+  <div class="phase-list">
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 1</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">Roof windows, north + south</div>
+        <p class="phase-body">Actuators mounted, H-bridges wired, limit switches fitted (and promptly suspected dead — 90s timeout workaround in place). The weather safety-close and the 2-hour heartbeat failsafe have both already earned their keep.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 1.5</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">The sensor node</div>
+        <p class="phase-body">A separate ESP32 with a DHT11 for inside temperature and humidity, publishing WiFi signal strength as a bonus. The fancy DS18B20 probes never talked back despite extensive diagnosis — the humble onboard sensor won.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 2</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">Climate engine + AI analysis</div>
+        <p class="phase-body">climateControl.ts vents automatically on inside temperature with clean hysteresis. And once a day, the last 24 hours of climate history goes to Claude for a short written analysis with heat-stress and mildew warnings.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 3</div>
+        <div class="phase-status">just started &middot; aug 2026</div>
+      </div>
+      <div>
+        <div class="phase-title">Watering</div>
+        <p class="phase-body">Firmware flashed and tested over USB; the relay clicks on command. Confirmed this week: valve 1 only waters the north bed — so the dashboard now honestly shows the water glow on the north plants only. Next up: wiring the 12/24V supply to prove the valve really opens.</p>
+      </div>
+    </div>
+  </div>
+  <div class="log-photos">
+    <div class="img-placeholder" data-caption="Wiring / hardware photo"></div>
+    <div class="img-placeholder" data-caption="Dashboard screenshot"></div>
+  </div>
+</section>
+
+<!-- ============ FUTURE / CTA ============ -->
+<section id="future" class="future">
+  <div class="future-intro">
+    <div class="eyebrow eyebrow-dark">Where this goes next</div>
+    <h2>This started as one greenhouse. It doesn't have to end there.</h2>
+    <p class="body-dark">If enough people want it, two things could exist. Tell me which one you'd use — that's genuinely what decides the roadmap.</p>
+  </div>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="concept-tag">concept 01</div>
+      <div class="concept-title">The Kit</div>
+      <p class="concept-body">Pre-flashed ESP32 nodes, actuator drivers, relay board and wiring guide — retrofit any hobby greenhouse with self-venting windows and watering in a weekend. No soldering marathon, no firmware rabbit hole.</p>
+      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20kit" class="btn btn-dark-solid">I'd buy the kit &rarr;</a>
+    </div>
+    <div class="concept-card">
+      <div class="concept-tag">concept 02</div>
+      <div class="concept-title">The Software</div>
+      <p class="concept-body">The dashboard and climate engine as a product: live scene of your greenhouse, weather-aware failsafes, and the nightly AI analysis — for growers who already have the hardware but not the picture.</p>
+      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20software" class="btn btn-dark-outline">I'd use the software &rarr;</a>
+    </div>
+    <div class="concept-card">
+      <div class="concept-tag">concept 03</div>
+      <div class="concept-title">The Training</div>
+      <p class="concept-body">Learn to build it yourself: a hands-on course from the real build log — wiring ESP32s and actuators, MQTT, fail-safe design, and hooking up the AI analysis. As a video series, workshop or a day in the actual greenhouse.</p>
+      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20training" class="btn btn-dark-outline">Teach me &rarr;</a>
+    </div>
+  </div>
+
+  <div id="signup" class="signup-panel">
+    <div class="signup-grid">
+      <div>
+        <div class="signup-tag">stay in the loop</div>
+        <div class="signup-title">Follow the build — or raise your hand.</div>
+        <p class="body-dark">Leave your email and what you're interested in. No spam — just build updates and a first shout when the kit or software becomes real.</p>
+      </div>
+      <div id="signup-form-wrap">
+        <div id="signup-form">
+          <div class="interest-row" id="interest-row">
+            <button type="button" class="interest-chip active" data-interest="Build updates">Build updates</button>
+            <button type="button" class="interest-chip" data-interest="The kit">The kit</button>
+            <button type="button" class="interest-chip" data-interest="The software">The software</button>
+            <button type="button" class="interest-chip" data-interest="The training">The training</button>
+          </div>
+          <div class="email-row">
+            <input id="signup-email" type="email" placeholder="you@example.com" autocomplete="email">
+            <button type="button" id="signup-submit" class="btn btn-green-solid">Sign up &rarr;</button>
+          </div>
+          <div class="form-note" id="signup-note">Opens your mail app with a prefilled message — until a real backend lands, that IS the list.</div>
+        </div>
+        <div id="signup-confirm" class="signup-confirm" hidden>
+          <div class="signup-confirm-title">You're on the list &#127793;</div>
+          <div class="signup-confirm-line" id="signup-confirm-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-row">
+    <div>autonomousgreenhouse.ai — built in a backyard, documented honestly</div>
+    <a href="mailto:hello@autonomousgreenhouse.ai">hello@autonomousgreenhouse.ai</a>
+  </div>
+</section>
+
+<script src="js/main.js"></script>
+</body>
+</html>
