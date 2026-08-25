@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build log — autonomousgreenhouse.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wordmark"><span class="wordmark-serif">autonomousgreenhouse</span><span class="wordmark-pill">.ai</span></div>
+  <div class="nav-links">
+    <a href="index.html">&larr; Back to autonomousgreenhouse.ai</a>
+  </div>
+</nav>
+
+<!-- ============ BUILD LOG (full history) ============ -->
+<section class="build-log">
+  <div class="eyebrow">Build log &middot; full history</div>
+  <h2 class="build-log-title">Every phase, newest first.</h2>
+  <div class="phase-list">
+    <!-- MONTHLY-UPDATES-START — kas/scripts/monthly-site-update.mjs inserts new phase-rows right after this marker -->
+    <div class="phase-row" data-auto-month="2026-08">
+      <div>
+        <div class="phase-tag">AUGUST 2026</div>
+        <div class="phase-status">auto-generated from git history</div>
+      </div>
+      <div>
+        <div class="phase-title">From Brain to Brawn</div>
+        <p class="phase-body">The greenhouse control system graduated from simple monitoring to an actual working machine. We wired up the physical world: a dedicated ESP32 now controls the irrigation solenoid valve, and the window motor firmware got smarter with failsafes and diagnostic logging. The server can now trigger a full AI climate analysis on demand, which gives weekly optimization suggestions—think 'water less in the morning' rather than raw data. The dashboard became a proper control room with a permanent weather map, clearer logs, and even a basic 3D digital twin of the whole setup.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 3</div>
+        <div class="phase-status">just started &middot; aug 2026</div>
+      </div>
+      <div>
+        <div class="phase-title">Watering</div>
+        <p class="phase-body">Firmware flashed and tested over USB; the relay clicks on command. Confirmed this week: valve 1 only waters the north bed — so the dashboard now honestly shows the water glow on the north plants only. Next up: wiring the 12/24V supply to prove the valve really opens.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 2</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">Climate engine + AI analysis</div>
+        <p class="phase-body">climateControl.ts vents automatically on inside temperature with clean hysteresis. And once a day, the last 24 hours of climate history goes to Claude for a short written analysis with heat-stress and mildew warnings.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 1.5</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">The sensor node</div>
+        <p class="phase-body">A separate ESP32 with a DHT11 for inside temperature and humidity, publishing WiFi signal strength as a bonus. The fancy DS18B20 probes never talked back despite extensive diagnosis — the humble onboard sensor won.</p>
+      </div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-tag">PHASE 1</div>
+        <div class="phase-status">running</div>
+      </div>
+      <div>
+        <div class="phase-title">Roof windows, north + south</div>
+        <p class="phase-body">Actuators mounted, H-bridges wired, limit switches fitted (and promptly suspected dead — 90s timeout workaround in place). The weather safety-close and the 2-hour heartbeat failsafe have both already earned their keep.</p>
+      </div>
+    </div>
+  </div>
+  <div class="log-photos">
+    <div class="img-placeholder" data-caption="Wiring / hardware photo"></div>
+    <div class="img-placeholder" data-caption="Dashboard screenshot"></div>
+  </div>
+</section>
+
+</body>
+</html>

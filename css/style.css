@@ -211,6 +211,7 @@ h1, h2, p { margin: 0; }
 .phase-body { font-size: 15.5px; line-height: 1.65; color: var(--text-secondary); margin: 0; }
 .log-photos { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .log-photos .img-placeholder { height: 260px; border-radius: 14px; }
+.log-more { margin-top: 28px; }
 
 /* ===== future / cta ===== */
 .future { background: var(--dark-section); color: var(--text-on-dark); padding: 96px 48px; }
