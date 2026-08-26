@@ -244,19 +244,19 @@
       <div class="concept-tag">concept 01</div>
       <div class="concept-title">The Kit</div>
       <p class="concept-body">Pre-flashed ESP32 nodes, actuator drivers, relay board and wiring guide — retrofit any hobby greenhouse with self-venting windows and watering in a weekend. No soldering marathon, no firmware rabbit hole.</p>
-      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20kit" class="btn btn-dark-solid">I'd buy the kit &rarr;</a>
+      <button type="button" class="btn btn-dark-solid concept-cta" data-interest="The kit">I'd buy the kit &rarr;</button>
     </div>
     <div class="concept-card">
       <div class="concept-tag">concept 02</div>
       <div class="concept-title">The Software</div>
       <p class="concept-body">The dashboard and climate engine as a product: live scene of your greenhouse, weather-aware failsafes, and the nightly AI analysis — for growers who already have the hardware but not the picture.</p>
-      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20software" class="btn btn-dark-outline">I'd use the software &rarr;</a>
+      <button type="button" class="btn btn-dark-outline concept-cta" data-interest="The software">I'd use the software &rarr;</button>
     </div>
     <div class="concept-card">
       <div class="concept-tag">concept 03</div>
       <div class="concept-title">The Training</div>
       <p class="concept-body">Learn to build it yourself: a hands-on course from the real build log — wiring ESP32s and actuators, MQTT, fail-safe design, and hooking up the AI analysis. As a video series, workshop or a day in the actual greenhouse.</p>
-      <a href="mailto:hello@autonomousgreenhouse.ai?subject=I%20want%20the%20training" class="btn btn-dark-outline">Teach me &rarr;</a>
+      <button type="button" class="btn btn-dark-outline concept-cta" data-interest="The training">Teach me &rarr;</button>
     </div>
   </div>
 
@@ -268,7 +268,12 @@
         <p class="body-dark">Leave your email and what you're interested in. No spam — just build updates and a first shout when the kit or software becomes real.</p>
       </div>
       <div id="signup-form-wrap">
-        <div id="signup-form">
+        <form id="signup-form" name="signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="signup">
+          <p style="position:absolute;left:-9999px;">
+            <label>Don't fill this out if you're human: <input name="bot-field"></label>
+          </p>
+          <input type="hidden" name="interest" id="signup-interest" value="Build updates">
           <div class="interest-row" id="interest-row">
             <button type="button" class="interest-chip active" data-interest="Build updates">Build updates</button>
             <button type="button" class="interest-chip" data-interest="The kit">The kit</button>
@@ -276,16 +281,24 @@
             <button type="button" class="interest-chip" data-interest="The training">The training</button>
           </div>
           <div class="email-row">
-            <input id="signup-email" type="email" placeholder="you@example.com" autocomplete="email">
-            <button type="button" id="signup-submit" class="btn btn-green-solid">Sign up &rarr;</button>
+            <input id="signup-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+            <button type="submit" id="signup-submit" class="btn btn-green-solid">Sign up &rarr;</button>
           </div>
-          <div class="form-note" id="signup-note">Opens your mail app with a prefilled message — until a real backend lands, that IS the list.</div>
-        </div>
+          <div class="form-note" id="signup-note">Your details go straight into the build log — no mail app needed.</div>
+        </form>
         <div id="signup-confirm" class="signup-confirm" hidden>
           <div class="signup-confirm-title">You're on the list &#127793;</div>
           <div class="signup-confirm-line" id="signup-confirm-line"></div>
         </div>
       </div>
+
+      <!-- Static duplicate for Netlify's form-detection (no build step to render JS-added fields) -->
+      <form name="signup" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="signup">
+        <input name="bot-field">
+        <input type="email" name="email">
+        <input type="text" name="interest">
+      </form>
     </div>
   </div>
 

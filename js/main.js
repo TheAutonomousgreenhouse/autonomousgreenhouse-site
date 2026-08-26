@@ -80,39 +80,63 @@
   tick();
   setInterval(tick, 1200);
 
-  // ---- signup: interest chips + mailto flow --------------------------------
+  // ---- signup: interest chips + Netlify Forms submit ------------------------
   var currentInterest = 'Build updates';
+
+  function setInterest(row, interestInput, value) {
+    currentInterest = value;
+    if (interestInput) interestInput.value = value;
+    row.querySelectorAll('.interest-chip').forEach(function (chip) {
+      chip.classList.toggle('active', chip.getAttribute('data-interest') === value);
+    });
+  }
 
   function initSignup() {
     const row = document.getElementById('interest-row');
+    const interestInput = document.getElementById('signup-interest');
     const emailInput = document.getElementById('signup-email');
     const submitBtn = document.getElementById('signup-submit');
     const form = document.getElementById('signup-form');
     const confirm = document.getElementById('signup-confirm');
     const confirmLine = document.getElementById('signup-confirm-line');
+    const note = document.getElementById('signup-note');
     if (!row || !emailInput || !submitBtn || !form || !confirm) return;
 
     row.addEventListener('click', function (e) {
       const btn = e.target.closest('.interest-chip');
       if (!btn) return;
-      currentInterest = btn.getAttribute('data-interest');
-      row.querySelectorAll('.interest-chip').forEach(function (chip) {
-        chip.classList.toggle('active', chip === btn);
+      setInterest(row, interestInput, btn.getAttribute('data-interest'));
+    });
+
+    document.querySelectorAll('.concept-cta').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setInterest(row, interestInput, btn.getAttribute('data-interest'));
+        document.getElementById('signup').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        emailInput.focus();
       });
     });
 
-    submitBtn.addEventListener('click', function () {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
       const email = emailInput.value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         emailInput.focus();
         return;
       }
-      const subject = encodeURIComponent('Sign me up — ' + currentInterest);
-      const body = encodeURIComponent('Email: ' + email + '\nInterested in: ' + currentInterest + '\n\n(sent from autonomousgreenhouse.ai)');
-      window.location.href = 'mailto:hello@autonomousgreenhouse.ai?subject=' + subject + '&body=' + body;
-      confirmLine.textContent = 'Interest noted: ' + currentInterest + ' — check your mail app to hit send.';
-      form.hidden = true;
-      confirm.hidden = false;
+      submitBtn.disabled = true;
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      }).then(function (res) {
+        if (!res.ok) throw new Error('submit failed');
+        confirmLine.textContent = 'Interest noted: ' + currentInterest + ' — you\'re on the list.';
+        form.hidden = true;
+        confirm.hidden = false;
+      }).catch(function () {
+        submitBtn.disabled = false;
+        if (note) note.textContent = 'Something went wrong sending that — please try again in a moment.';
+      });
     });
   }
 

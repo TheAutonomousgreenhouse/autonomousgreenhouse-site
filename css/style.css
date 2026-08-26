@@ -227,6 +227,9 @@ h1, h2, p { margin: 0; }
 .btn-dark-solid:hover { background: var(--green-light); color: var(--panel-dark); }
 .btn-dark-outline { margin-top: auto; display: inline-block; border: 1.5px solid var(--green-on-dark); color: var(--green-light); text-decoration: none; padding: 13px 24px; border-radius: 99px; font-weight: 600; font-size: 14.5px; width: max-content; }
 .btn-dark-outline:hover { border-color: var(--green-light); color: var(--text-on-dark-2); }
+.concept-cta { font-family: inherit; cursor: pointer; }
+.concept-cta.btn-dark-solid { border: none; }
+.concept-cta.btn-dark-outline { background: transparent; }
 
 .signup-panel { border: 1px solid var(--border-dark); border-radius: 18px; padding: 40px; background: var(--panel-dark-2); margin-bottom: 48px; }
 .signup-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; }
