@@ -4,9 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>autonomousgreenhouse.ai — a greenhouse that runs itself</title>
+<meta name="description" content="A backyard greenhouse that runs itself: roof windows that open with the heat and close before a storm, relay-driven watering, and a daily AI read on what the plants went through. Built at home with three ESP32s, documented honestly — bugs included.">
+<link rel="canonical" href="https://autonomousgreenhouse.ai/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="autonomousgreenhouse.ai">
+<meta property="og:url" content="https://autonomousgreenhouse.ai/">
+<meta property="og:title" content="autonomousgreenhouse.ai — a greenhouse that runs itself">
+<meta property="og:description" content="A backyard greenhouse that runs itself: roof windows that open with the heat and close before a storm, relay-driven watering, and a daily AI read on what the plants went through. Built at home with three ESP32s, documented honestly — bugs included.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="autonomousgreenhouse.ai — a greenhouse that runs itself">
+<meta name="twitter:description" content="A backyard greenhouse that runs itself: roof windows that open with the heat and close before a storm, relay-driven watering, and a daily AI read on what the plants went through.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "autonomousgreenhouse.ai",
+  "url": "https://autonomousgreenhouse.ai/",
+  "description": "A backyard greenhouse that runs itself: roof windows that open with the heat and close before a storm, relay-driven watering, and a daily AI read on what the plants went through. Built at home with three ESP32s, documented honestly — bugs included.",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "autonomousgreenhouse.ai builder",
+    "email": "hello@autonomousgreenhouse.ai"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -76,7 +102,9 @@
       <div class="sim-note">&#9650; simulated preview — the real thing runs on MQTT + SSE</div>
     </div>
     <div class="scene-panel">
-      <svg viewBox="0 0 520 300" class="scene-svg">
+      <svg viewBox="0 0 520 300" class="scene-svg" role="img" aria-labelledby="scene-svg-title scene-svg-desc">
+        <title id="scene-svg-title">Live greenhouse dashboard scene</title>
+        <desc id="scene-svg-desc">Diagram of the greenhouse roof with north and south flaps, a water zone over the north bed fed by valve 1, and an MQTT connection indicator.</desc>
         <line x1="20" y1="262" x2="500" y2="262" stroke="#2A3E31" stroke-width="2"/>
         <path d="M70 262 L70 140 L260 60 L450 140 L450 262" fill="rgba(79,163,107,0.06)" stroke="#4FA36B" stroke-width="2.5" stroke-linejoin="round"/>
         <line x1="70" y1="140" x2="450" y2="140" stroke="#2A3E31" stroke-width="1.5"/>

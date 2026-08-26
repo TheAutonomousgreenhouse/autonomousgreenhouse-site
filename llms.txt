@@ -1,0 +1,23 @@
+# autonomousgreenhouse.ai
+
+> A backyard greenhouse that runs itself: roof windows that open with the heat and close before a storm, watering by relay, and a daily AI read on what the plants went through. Built at home, wired by hand, documented honestly — bugs included.
+
+## What this is
+
+A hobby project turning a real backyard greenhouse into a self-managing system, running on three ESP32 microcontrollers talking MQTT to a small server:
+
+- **Self-venting roof windows** — two ESP32 nodes drive 12V linear actuators through BTS7960 H-bridges, one per roof flap (north and south). A weather guard on Open-Meteo data closes both windows on thunderstorms, gusts over 50 km/h, or rain, then restores the last wanted position once it clears. Climate control vents on hysteresis: opens above 25°C, closes under 21°C, with the weather guard always taking priority.
+- **Relay-driven watering** — a fail-safe-closed 1" solenoid valve on its own ESP32 node, decoupled from the climate logic. Currently manual (dashboard button or shell script); valve 1 only reaches the north bed. Soil-moisture automation is planned next.
+- **Nightly AI analysis** — once a day at 00:00, the server sends 24 hours of temperature, humidity, and cloud-cover history to Claude, which returns a short plain-language analysis of how the climate behaved, with early warnings for heat stress or mildew risk.
+- **Failsafes by design** — lose the network and the windows close, valves shut themselves off, nothing floods. Roof nodes close if the heartbeat is lost for 2 hours; watering valves auto-timeout after 4 hours.
+
+Known limitations, documented honestly: the roof limit switches are probably dead or miswired, so the move-timeout is temporarily parked at 90 seconds as a workaround. The original DS18B20 outdoor temperature sensors never worked despite extensive diagnosis; a DHT11 does the job for now.
+
+## Pages
+
+- [Home](https://autonomousgreenhouse.ai/): project overview, live dashboard preview, how the system works, and ways to get involved (a pre-flashed hardware kit, the software/dashboard as a product, or hands-on training).
+- [Build log](https://autonomousgreenhouse.ai/build-log.html): the full phase-by-phase build history, newest first, covering roof window mounting, the sensor node, the climate engine and AI analysis, and the watering system.
+
+## Contact
+
+hello@autonomousgreenhouse.ai
