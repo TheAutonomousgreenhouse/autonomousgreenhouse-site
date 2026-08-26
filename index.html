@@ -145,14 +145,18 @@
       <h2>An AI agronomist reads the day back to you.</h2>
       <p class="body-light">Once a day the server sends 24 hours of temperature, humidity and cloud-cover history to Claude, which returns a short plain-language analysis: how the climate behaved, and early warnings for heat stress or mildew risk. It shows up on the dashboard like a note from someone who was watching all day.</p>
     </div>
-    <div class="ai-card">
+    <!-- LATEST-ANALYSIS-START — kas/scripts/daily-analysis-site-update.mjs keeps this in sync with the newest row of ai-analyses.html -->
+    <div class="ai-card" data-auto-ts="1787702480615">
       <div class="ai-card-head">
-        <div class="ai-card-tag">daily-analysis &middot; claude</div>
-        <div class="ai-card-pill">mildew watch</div>
+        <div class="ai-card-tag">daily-analysis &middot; AUG 26, 2026</div>
       </div>
-      <p class="ai-quote">&ldquo;A warm afternoon peaking at 27.4&deg;C; the roof vented on time and kept the spike short. Overnight humidity stayed above 85% under cloud cover — watch the lower tomato leaves for early mildew, and consider venting earlier tomorrow morning.&rdquo;</p>
+      <p class="ai-quote">&ldquo;The indoor temperature followed a normal daily pattern with a minimum of 13.2&deg;C in the early morning and a maximum of 33.1&deg;C in the afternoon. Despite automatic ventilation above 25&deg;C, 33.1&deg;C was still reached, indicating significant heat stress for sensitive crops like strawberries, tomatoes, and bell peppers. Humidity dropped sharply during the day to as low as 25% in the hottest hours, increasing the risk of desiccation, but rose again at night to 76%, which under cool conditions does not pose an immediate risk of fungal disease. Cloud cover was variable but provided insufficient protection from the high temperatures. <strong>Advice:</strong> Consider manually applying additional shade during peak hours to keep temperatures below 30&deg;C. <strong>Watch:</strong> check the crops for signs of heat stress such as leaf scorch or wilting.&rdquo;</p>
       <div class="ai-card-foot">generated from 24h of sensor history — no prompts, no dashboards to read</div>
     </div>
+    <!-- LATEST-ANALYSIS-END -->
+  </div>
+  <div class="log-more">
+    <a href="ai-analyses.html" class="btn btn-outline">Read past analyses &rarr;</a>
   </div>
 </section>
 
