@@ -199,6 +199,16 @@
   <h2 class="build-log-title">Built in phases, in the open.</h2>
   <div class="phase-list">
     <!-- LATEST-3-START — kas/scripts/monthly-site-update.mjs keeps this in sync with the first 3 rows of build-log.html -->
+    <div class="phase-row" data-auto-month="2026-09">
+      <div>
+        <div class="phase-tag">SEPTEMBER 2026</div>
+        <div class="phase-status">auto-generated from git history</div>
+      </div>
+      <div>
+        <div class="phase-title">Added second water valve for south wall</div>
+        <p class="phase-body">The system now controls a second water valve serving the south wall reservoir, expanding irrigation coverage. Both the dashboard and digital twin were updated to monitor and manage this new hardware component. This allows for more precise water distribution across different greenhouse zones.</p>
+      </div>
+    </div>
     <div class="phase-row" data-auto-month="2026-08">
       <div>
         <div class="phase-tag">AUGUST 2026</div>
@@ -219,17 +229,7 @@
         <p class="phase-body">Firmware flashed and tested over USB; the relay clicks on command. Confirmed this week: valve 1 only waters the north bed — so the dashboard now honestly shows the water glow on the north plants only. Next up: wiring the 12/24V supply to prove the valve really opens.</p>
       </div>
     </div>
-    <div class="phase-row">
-      <div>
-        <div class="phase-tag">PHASE 2</div>
-        <div class="phase-status">running</div>
-      </div>
-      <div>
-        <div class="phase-title">Climate engine + AI analysis</div>
-        <p class="phase-body">climateControl.ts vents automatically on inside temperature with clean hysteresis. And once a day, the last 24 hours of climate history goes to Claude for a short written analysis with heat-stress and mildew warnings.</p>
-      </div>
-    </div>
-    <!-- LATEST-3-END -->
+<!-- LATEST-3-END -->
   </div>
   <div class="log-more">
     <a href="build-log.html" class="btn btn-outline">Read the full build log &rarr;</a>
